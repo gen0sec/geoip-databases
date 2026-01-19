@@ -1,4 +1,5 @@
-# GeoLite.mmdb
+# GeoIP Updater
+[![GeoIP Updater](https://github.com/gen0sec/geoip-databases/actions/workflows/geoip-updater.yml/badge.svg)](https://github.com/gen0sec/geoip-databases/actions/workflows/geoip-updater.yml)
 
 [MaxMind's GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) Country, City, and ASN databases
 [IPInfo's Lite](https://ipinfo.io/lite) Country

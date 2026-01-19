@@ -19,8 +19,8 @@ jobs:
         wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
         mkdir -p upload
         cp -v GeoLite*/*.mmdb upload
-        wget -nv -O- "https://ipinfo.io/data/ipinfo_lite.mmdb?_src=frontend&token=${{ secrets.IPINFO_LICENSE_KEY }}"
-        cp -v ipinfo_lite.mmdb upload/ipinfo/ipinfo_lite.mmdb
+        wget -nv -O ipinfo_lite.mmdb "https://ipinfo.io/data/ipinfo_lite.mmdb?_src=frontend&token=${{ secrets.IPINFO_LICENSE_KEY }}"
+        cp -v ipinfo_lite.mmdb upload/ipinfo_lite.mmdb
         echo "TAG_NAME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
 
     - name: Push to "download" branch
