@@ -21,6 +21,10 @@ jobs:
         cp -v GeoLite*/*.mmdb upload
         wget -nv -O ipinfo_lite.mmdb "https://ipinfo.io/data/ipinfo_lite.mmdb?_src=frontend&token=${{ secrets.IPINFO_LICENSE_KEY }}"
         cp -v ipinfo_lite.mmdb upload/ipinfo_lite.mmdb
+        cd upload
+        for file in *.mmdb; do
+          sha256sum "$file" > "${file}.sha256.txt"
+        done
         echo "TAG_NAME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
 
     - name: Push to "download" branch
@@ -42,7 +46,9 @@ jobs:
       with:
         tag_name: ${{ env.TAG_NAME }}
         body: ${{ env.TAG_NAME }}
-        files: upload/*.mmdb
+        files: |
+         upload/*.mmdb
+         upload/*.sha256.txt
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@master
