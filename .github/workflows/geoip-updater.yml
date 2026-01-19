@@ -1,0 +1,60 @@
+name: Publish GeoLite.mmdb
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 1 * * *
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+    - name: Download GeoLite.mmdb
+      run: |
+        wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
+        wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
+        wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
+        wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ISP&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
+        mkdir -p upload
+        cp -v GeoLite*/*.mmdb upload
+        wget -nv -O- "https://ipinfo.io/data/ipinfo_lite.mmdb?_src=frontend&token=${{ secrets.IPINFO_LICENSE_KEY }}"
+        cp -v ipinfo_lite.mmdb upload/ipinfo/ipinfo_lite.mmdb
+        echo "TAG_NAME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
+
+    - name: Push to "download" branch
+      run: |
+        cd upload
+        git init
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+        git checkout -b download
+        git add .
+        git commit -m "${{ env.TAG_NAME }}"
+        git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+        git push -f origin download
+
+    - name: Upload to Releases
+      uses: softprops/action-gh-release@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.TAG_NAME }}
+        body: ${{ env.TAG_NAME }}
+        files: upload/*.mmdb
+
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@master
+      with:
+        keep_latest: 2
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+        retain_days: 0
+        keep_minimum_runs: 2
