@@ -9,9 +9,13 @@
 ### URL1
 
 - [GeoLite2-ASN.mmdb](https://github.com/gen0sec/geoip-databases/raw/download/GeoLite2-ASN.mmdb)
+- [GeoLite2-ASN.mmdb.sha256.txt](https://github.com/gen0sec/geoip-databases/raw/download/GeoLite2-ASN.mmdb.sha256.txt)
 - [GeoLite2-City.mmdb](https://github.com/gen0sec/geoip-databases/raw/download/GeoLite2-City.mmdb)
+- [GeoLite2-City.mmdb.sha256.txt](https://github.com/gen0sec/geoip-databases/raw/download/GeoLite2-City.mmdb.sha256.txt)
 - [GeoLite2-Country.mmdb](https://github.com/gen0sec/geoip-databases/raw/download/GeoLite2-Country.mmdb)
+- [GeoLite2-Country.mmdb.sha256.txt](https://github.com/gen0sec/geoip-databases/raw/download/GeoLite2-Country.mmdb.sha256.txt)
 - [IPInfoLite.mmdb](https://github.com/gen0sec/geoip-databases/raw/download/ipinfo_lite.mmdb)
+- [IPInfoLite.mmdb.sha256.txt](https://github.com/gen0sec/geoip-databases/raw/download/ipinfo_lite.mmdb.sha256.txt)
 
 ## License
 
