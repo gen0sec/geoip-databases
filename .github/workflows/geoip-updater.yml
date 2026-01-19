@@ -1,4 +1,4 @@
-name: Publish GeoLite.mmdb
+name: GeoIP Updater
 
 on:
   repository_dispatch:
@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-    - name: Download GeoLite.mmdb
+    - name: Download GeoIP Databases
       run: |
         wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
         wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
