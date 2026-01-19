@@ -17,7 +17,6 @@ jobs:
         wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
         wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
         wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
-        wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ISP&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
         mkdir -p upload
         cp -v GeoLite*/*.mmdb upload
         wget -nv -O- "https://ipinfo.io/data/ipinfo_lite.mmdb?_src=frontend&token=${{ secrets.IPINFO_LICENSE_KEY }}"
