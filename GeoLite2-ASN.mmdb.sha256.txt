@@ -1,0 +1,1 @@
+e2f90a18a62de347e1652fa2d4ee4ec853692b3c9e8a3b306f28eddad7b94b61  GeoLite2-ASN.mmdb
