@@ -1,0 +1,1 @@
+fcd0944c2c239c9308cda7858e0f21faac8c7367d7d87abbb86f3fd09caa5f67  ipinfo_lite.mmdb
