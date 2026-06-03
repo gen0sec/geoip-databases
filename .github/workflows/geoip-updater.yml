@@ -9,9 +9,12 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 30
 
     steps:
+    - name: Checkout (for the merge tool source)
+      uses: actions/checkout@v4
+
     - name: Download GeoIP Databases
       run: |
         wget -nv -O- "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN&license_key=${{ secrets.MAXMIND_LICENSE_KEY }}&suffix=tar.gz" | tar zxv
@@ -26,6 +29,21 @@ jobs:
           sha256sum "$file" > "${file}.sha256.txt"
         done
         echo "TAG_NAME=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+
+    - name: Merge GeoLite2 City + ASN into a single database
+      run: |
+        cd tools/merge-geolite2
+        go mod tidy
+        go build -o "$GITHUB_WORKSPACE/merge-geolite2" .
+        cd "$GITHUB_WORKSPACE"
+        ./merge-geolite2
+        cd upload
+        sha256sum GeoLite2-City-ASN.mmdb > GeoLite2-City-ASN.mmdb.sha256.txt
 
     - name: Push to "download" branch
       run: |

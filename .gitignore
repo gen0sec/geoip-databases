@@ -1,0 +1,7 @@
+# Build artifacts produced by the GeoIP updater workflow; published to the
+# `download` branch / Releases, never committed to source branches.
+/upload/
+/GeoLite2*/
+*.mmdb
+*.mmdb.sha256.txt
+/merge-geolite2
