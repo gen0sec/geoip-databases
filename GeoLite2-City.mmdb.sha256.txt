@@ -1,0 +1,1 @@
+892f711a139a5c76dd2b7908f087148c729df287a504336daa2ccc7e2292ebbd  GeoLite2-City.mmdb
