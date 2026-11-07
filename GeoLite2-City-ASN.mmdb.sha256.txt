@@ -1,0 +1,1 @@
+a0a0a3d74c32e29f10808677ce0ca579b2df4028bf71dd0012407b3b9f10ad10  GeoLite2-City-ASN.mmdb
